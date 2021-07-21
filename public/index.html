@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review category cards</title>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+
+</head>
+<body>
+    <div class="card">
+        <div id="cards-left"></div>
+        <div class="card-question" id="question"></div>
+        <div class="category">Choose a category</div>
+        <div class="button-group">
+            <button class="button" id="mathematics" onclick="fetchCards(this.id)">Mathematics</button>
+            <button class="button" id="python" onclick="fetchCards(this.id)">Python</button>
+            <button class="button" id="codeTerms"  onclick="fetchCards(this.id)">Code Terms</button>
+            <button class="button" id="programmingGeneral" onclick="fetchCards(this.id)">Programming in general</button> 
+            <button class="button" id="other" onclick="fetchCards(this.id)">Other</button>
+        </div>
+    </div>
+    <button onclick="fetchCards()">Update files</button>
+    <script src="fetchRequests.js"></script>
+</body>
+</html>
