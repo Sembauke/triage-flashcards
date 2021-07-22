@@ -1,9 +1,9 @@
 function insertCategory(card, category) {
-    console.log(card[0].id);
+    console.log('I got executed :(');
     fetch('/update-card-category', {
         method: 'POST',
         body: JSON.stringify({
-            id: card[0].id,
+            id: card.id,
             category: category
         }),
         headers: {
@@ -15,8 +15,10 @@ function insertCategory(card, category) {
         }
     });
 }
+
 function updateDisplay(card){
-    document.getElementById("question").innerHTML = card[0].front;
+    console.log(card);
+    document.getElementById("question").innerHTML = card["front"];
 }
 function fetchCards(category) {
     fetch('/cards')
