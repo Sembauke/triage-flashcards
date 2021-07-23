@@ -2,7 +2,7 @@
     padding-top: 1em;
     margin: 0 auto;
     width: 500px;
-    height: 700px;
+    min-height: 700px;
     background-color: #3b3b4f;
     color: white;
     font-family: 'Open Sans', sans-serif;

@@ -56,6 +56,49 @@ app.post('/update-card-category', (req, res) => {
 
 });
 
+
+// insert a new category into the db 
+app.post('/insert-category', (req, res) => {
+    const db = new sqlite3.Database('./db/cards-jwasham.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Database opened successfully');
+    });
+    // insert category
+    db.run('INSERT INTO categories (category_name) VALUES (?)', [req.body.category_name], (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Category inserted successfully');
+        // close db connection
+        db.close();
+        // return card
+        res.json({status: 'success'});
+    });
+});	
+
+
+app.get('/category', (req, res) => {
+    // open db connection
+    const db = new sqlite3.Database('./db/cards-jwasham.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+    });
+    // select all categories from the categories table 
+    db.all('SELECT * FROM categories', (err, rows) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('All rows fetched successfully');
+        res.json(rows);
+        // close db connection
+        db.close();
+    });
+});
+
+
 app.listen(process.env.PORT, process.env.URL, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });

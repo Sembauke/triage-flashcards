@@ -1,5 +1,52 @@
+// TODO: alter text of the flashcard
+// TODO: put category in a seperate table
+// TODO: be able to delete a card
+// TODO: be able to change the category of a card
+// TODO: be able to select a certain card category
+// TODO: view a list of all cards?
+
+function fetchCategories(){
+    console.log("fetching categories");
+    fetch('/category', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(category => {
+        document.getElementById("categories").innerHTML = "";
+        for(let i = 0; i < category.length; i++){
+            console.log(category[i]);
+            let button = document.createElement("button");
+            button.id = category[i]["category_name"];
+            button.innerHTML = category[i]["category_name"];
+            button.className = "button";
+            button.onclick = fetchCards(this.id);
+            document.getElementById("categories").appendChild(button);
+        }
+    })
+}
+
+function addCategory(){
+    let insertCategory = prompt("Enter the category name: ");
+    if(insertCategory){
+        fetch('/insert-category', {
+            method: 'POST',
+            body: JSON.stringify({
+                category_name: insertCategory
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        fetchCategories();
+    }
+}
+
+// Insert new category to the current held card 
 function insertCategory(card, category) {
-    console.log('I got executed :(');
     fetch('/update-card-category', {
         method: 'POST',
         body: JSON.stringify({
@@ -11,7 +58,7 @@ function insertCategory(card, category) {
         }
     }).then(response => {
         if(response.ok){
-            fetchCards();
+            fetchCards(category);
         }
     });
 }
@@ -49,4 +96,5 @@ function fetchCards(category) {
 
 window.addEventListener('load', function() {	
     fetchCards();
+    fetchCategories();
 });
