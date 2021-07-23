@@ -1,5 +1,4 @@
 // TODO: alter text of the flashcard
-// TODO: put category in a seperate table
 // TODO: be able to delete a card
 // TODO: be able to change the category of a card
 // TODO: be able to select a certain card category
@@ -18,12 +17,14 @@ function fetchCategories(){
     .then(category => {
         document.getElementById("categories").innerHTML = "";
         for(let i = 0; i < category.length; i++){
-            console.log(category[i]);
             let button = document.createElement("button");
             button.id = category[i]["category_name"];
             button.innerHTML = category[i]["category_name"];
             button.className = "button";
-            button.onclick = fetchCards(this.id);
+            button.onclick = function(){
+                fetchCards(this.id)
+            }
+            button.setAttribute('data-category', button.id);
             document.getElementById("categories").appendChild(button);
         }
     })
@@ -58,7 +59,7 @@ function insertCategory(card, category) {
         }
     }).then(response => {
         if(response.ok){
-            fetchCards(category);
+            fetchCards();
         }
     });
 }
