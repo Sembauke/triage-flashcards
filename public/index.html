@@ -9,12 +9,27 @@
 
 </head>
 <body>
+    <div>
+    <button class="button button-2" onclick="deleteCard()">
+        delete card
+    </button>
+    <button class="button button-2" onclick="alterTextCard('front')">
+        alter text front
+    </button>
+    <button class="button button-2" onclick="alterTextCard('back')">
+        alter text back
+    </button>
+    <button class="button button-2" onclick="changeCategory()">
+        change category
+    </button>
+    </div>
     <div class="card">
         <div id="cards-left"></div>
        
         <div class="card-question" id="card" onclick="switchFrontAndBack()">
             <p id="front-back">Front of the card</p>
             <div id="question"></div>
+            <p id="category_display">Category:</p>
         </div>
         
         <div class="category">Choose a category</div>

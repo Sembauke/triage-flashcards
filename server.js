@@ -34,6 +34,49 @@ app.get('/cards', (req, res) => {
 
 });
 
+app.delete('/cards/:id', (req, res) => {
+    // open db connection
+    const db = new sqlite3.Database('./db/cards-jwasham.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Database opened successfully');
+    });
+    // delete card with id
+    db.run('DELETE FROM cards WHERE id = ?', [req.params.id], (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Card deleted successfully');
+        // close db connection
+        db.close();
+        // return card deleted
+        res.json({message: 'Card deleted successfully'});
+    });
+});
+
+// be able to change front and back of card with a certain id
+app.put('/cards-text/:id', (req, res) => {
+    // open db connection
+    const db = new sqlite3.Database('./db/cards-jwasham.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Database opened successfully');
+    });
+    // change card with id
+    db.run('UPDATE cards SET front = ?, back = ? WHERE id = ?', [req.body.front, req.body.back, req.params.id], (err) => {
+        if (err) {
+            return console.log(err.message);
+        }
+        console.log('Card text updated successfully');
+        // close db connection
+        db.close();
+        // return card updated
+        res.json({message: 'Card updated successfully'});
+    });
+});
+
 app.post('/update-card-category', (req, res) => {
 
     const db = new sqlite3.Database('./db/cards-jwasham.db', sqlite3.OPEN_READWRITE, (err) => {
